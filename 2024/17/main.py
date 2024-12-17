@@ -1,19 +1,25 @@
 import numpy as np
 
-DAY = -1
+DAY = 17
 FILE = "test.txt"
 
 def getInput():
 
     
     with open(f"2024/{DAY}/{FILE}", "r") as file:
-        pass
+        content = file.read()
 
+    content = content.split("\n")
 
-    return 
+    program = np.array([int(num) for num in content[-1].split(": ")[-1].split(",")], dtype=int)
+    RegA = int(content[0].replace("\n", "").split(": ")[-1])
+    RegB = int(content[1].replace("\n", "").split(": ")[-1])
+    RegC = int(content[2].replace("\n", "").split(": ")[-1])
 
-def solve1(input):
+    return program, RegA, RegB, RegC
 
+def solve1(program, RegA, RegB, RegC):
+    
     return 
 
 
@@ -27,6 +33,6 @@ def solve2(input):
 
 
 if __name__ == "__main__":
-    input = getInput()
-    print(solve1(input))
+    program, RegA, RegB, RegC = getInput()
+    print(solve1(program, RegA, RegB, RegC))
     print(solve2(input))

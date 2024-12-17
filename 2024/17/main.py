@@ -1,7 +1,7 @@
 import numpy as np
 
 DAY = 17
-FILE = "test.txt"
+FILE = "test4.txt"
 
 def getInput():
 
@@ -37,7 +37,7 @@ def adv(Regs, literal, index = 0):
     return
 
 def bxl(Regs, literal):
-    Regs[1] ^ literal
+    Regs[1] ^= literal
     return
 
 def bst(Regs, literal):
@@ -53,7 +53,7 @@ def solve1(program, Regs):
     i = 0
     output = ""
     while i < len(program)-1:
-        print(i)
+        # print(i)
         opcode = program[i]
         literal = program[i+1]
         

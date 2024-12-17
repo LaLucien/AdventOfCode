@@ -1,7 +1,7 @@
 import numpy as np
 
 DAY = 17
-FILE = "test4.txt"
+FILE = "input.txt"
 
 def getInput():
 
@@ -33,7 +33,7 @@ def combo(literal, Regs):
 
 
 def adv(Regs, literal, index = 0):
-    Regs[0] = Regs[index] // (2 ** combo(literal, Regs))
+    Regs[index] = Regs[0] // (2 ** combo(literal, Regs))
     return
 
 def bxl(Regs, literal):
@@ -52,8 +52,9 @@ def bst(Regs, literal):
 def solve1(program, Regs):
     i = 0
     output = ""
-    while i < len(program)-1:
-        # print(i)
+    while (True):
+        if(i >= len(program)):
+            break
         opcode = program[i]
         literal = program[i+1]
         
@@ -73,8 +74,6 @@ def solve1(program, Regs):
             if not Regs[0]:
                 i+=2
                 continue
-            # if i == len(program)-2:
-            #     break
             i = literal    
             continue
         if opcode == 4:

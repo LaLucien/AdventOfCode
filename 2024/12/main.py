@@ -43,8 +43,10 @@ def solve1(input):
 
             plantData[currentPlant][1] += newBorderLength
 
+    
     totalPrice = 0   
     for key in plantData.keys():
+        print(key, plantData[key])
         totalPrice += plantData[key][0] * plantData[key][1]
 
     return totalPrice

@@ -1,8 +1,8 @@
 import numpy as np
-from numba import jit, njit, prange
 
 DAY = 7
-FILE = "test.txt"
+FILE = "puzzle.txt"
+
 
 def getInput():
 
@@ -17,47 +17,39 @@ def getInput():
         for snum in line.strip().split(": ")[1].split(" "):
             numbers.append(int(snum))
         equations.append(np.array(numbers))
-    
+
     return (np.array(solutions), equations)
 
 
-def countPossibilities(sol, numbers, currentValue, currentIndex):
-    # correct
-    if (sol == currentValue and currentIndex >= len(numbers) - 1):
-        return 1
-    #overshoot, no more numbers
-    if(sol < currentValue or currentIndex >=  len(numbers) - 1):
-        return 0
-    
-
-    foundPossibilities = countPossibilities(sol, numbers, numbers[currentIndex] + numbers[currentIndex + 1], currentIndex + 1)
-    return   foundPossibilities + countPossibilities(sol, numbers, numbers[currentIndex] * numbers[currentIndex + 1], currentIndex + 1) 
-    
-
-    
+def check_solution(expected, running_total, numbers, current_index):
+    if expected == running_total:
+        return True
+    if current_index + 1 >= len(numbers):
+        return False
+    return check_solution(
+        expected, running_total + numbers[current_index + 1], numbers, current_index + 1
+    ) or check_solution(
+        expected, running_total * numbers[current_index + 1], numbers, current_index + 1
+    )
 
 
 def solve1(input):
     solutions = input[0]
     equations = input[1]
     # operators = np.array(["+", "*"])
+    solution = 0
+    for expected, numbers in zip(solutions, equations):
+        if check_solution(expected, 0 + numbers[0], numbers, 0) or check_solution(
+            expected, 1 * numbers[0], numbers, 0
+        ):
+            solution += expected
 
-    rightPossibilities = 0
-
-    for i in prange(len(solutions)):
-        rightPossibilities += countPossibilities(solutions[i], equations[i],   equations[i][0] + equations[i][0 + 1], 1)
-        rightPossibilities += countPossibilities(solutions[i], equations[i],   equations[i][0] * equations[i][0 + 1], 1)
-
-    return rightPossibilities
-
+    return solution
 
 
 def solve2(input):
 
-
-    return 
-
-
+    return
 
 
 if __name__ == "__main__":
